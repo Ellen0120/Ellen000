@@ -1,0 +1,62 @@
+---
+title: "彙整"
+author: "Ellen"
+date: "2019年7月14日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+#plan
+了解台北各區人口數和小學數量是否相關
+
+#匯入資料
+
+> library(readxl)
+> people <- read_excel("C:/Users/Lenovo/Desktop/people.xls")
+> View(people)
+>library(readxl)
+> primary_ <- read_excel("C:/Users/Lenovo/Desktop/primary .xls")
+> View(primary_)
+
+#整理資料
+```{r}
+
+```
+library(dplyr)
+peopledata<- select(people, postal_code, site_id,people_total, area, population_density)
+    head(select(people, postal_code, site_id,people_total, area, population_density))
+    filter1<- filter(peopledata, site_id  %in%  c ("臺北市北投區","臺北市士林區","臺北市內湖區","臺北市南港區","臺北市文山區","臺北市萬華區","臺北市大同區","臺北市中正區","臺北市中山區","臺北市大安區","臺北市信義區","臺北市松山區"))
+    arrange1<-arrange(filter1,postal_code)
+    head(arrange1)
+
+    primary_data<- select(primary_, postal_code,school, school_name, address)
+    head(primary_data)
+    primary_data1<- filter(primary_data, school %in%  c("國小", "國中"))
+    arrange2<- arrange(primary_data1, postal_code)
+    head(arrange2)
+```
+
+
+
+
+
+#合併資料
+```{r}
+    combine <- merge(arrange1,arrange2, all = FALSE)
+    final<- select(combine, site_id:population_density, school_name)
+    head(final)
+```
+
+
