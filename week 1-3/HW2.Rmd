@@ -1,0 +1,80 @@
+---
+title: "HW2"
+author: "Ellen"
+date: "2019年7月16日"
+output: html_document
+---
+
+##7/15 資料視覺化##     
+#objective#   
+了解台北各區人口數、地區面積、人口密度和小學、國中數量是否相關
+因為考慮到高中生未必會在所居住地就讀學校，故排除
+[Data1](https://data.gov.tw/dataset/8410)     
+內容為全台各鄉鎮市區人口密度、人口數、面積
+[Data2](https://data.gov.tw/dataset/61586)    
+內容為台北市的學校，包含國小、國中、高中
+
+#匯入資料#
+```{r}
+library(readxl)     
+people <- read_excel("C:/Users/Lenovo/Desktop/people.xls")      
+View(people) #讀入全台人口各區資料      
+library(readxl)     
+primary_ <- read_excel("C:/Users/Lenovo/Desktop/primary .xls")      
+View(primary_) #讀入台北市學校資料    
+```
+
+#整理資料(people)#        
+```{r}
+library(dplyr)
+peopledata<- select(people, postal_code, site_id,people_total, area, population_density)     
+head(select(people, postal_code, site_id,people_total, area, population_density))        
+filter1<- filter(peopledata, site_id  %in%  c ("臺北市北投區","臺北市士林區","臺北市內湖區","臺北市南港區","臺北市文山區","臺北市萬華區","臺北市大同區","臺北市中正區","臺北市中山區","臺北市大安區","臺北市信義區","臺北市松山區")) #選取台北市各區人口             
+arrange1<-arrange(filter1,postal_code) #照郵遞區號排序      
+head(arrange1)    
+```
+#整理資料(primary)#     
+```{r}
+primary_data<- select(primary_, postal_code,school, school_name, address)      
+head(primary_data)      
+primary_data1<- filter(primary_data, school %in%  c("國小", "國中")) #篩選國小和國中            
+arrange2<- arrange(primary_data1, postal_code)#照郵遞區號排序       
+head(arrange2)    
+```
+#合併資料#
+```{r}
+combine <- merge(arrange1,arrange2, all = FALSE)    
+final<- select(combine, postal_code, site_id:population_density, school_name)   
+head(final)   
+```
+#統計各區學校數量(plot)#
+```{r}
+require(ggplot2)    
+ggplot(final, aes(x = site_id)) + geom_bar() +geom_text(stat="count",aes(label=..count..),,vjust=-1)  #將台北市各區之小學和國中總和以長條圖畫出(把數字Lable在圖上，並將垂直座標下移)
+#第一張圖小結:可以看出文山、士林、北投區的學校數量較多，接下來結合人數、面積、密度來了解其差異
+```
+
+#結合各區人口數、面積、人口密度對其影響
+```{r}
+ggplot(final, aes(x = site_id)) + geom_bar(aes(fill=as.numeric(final$people_total))) +geom_text(stat="count",aes(label=..count..),,vjust=-1)
+#將各區人數加入長條圖中
+```
+```{r}
+reorder_site_id<-function(x){factor(x, levels = names(sort(table(x))))} #將圖表按照學校數量排序
+ggplot(final, aes(x=reorder_site_id(site_id)))+geom_bar(aes(fill=as.numeric(final$people_total)))+geom_text(stat="count",aes(label=..count..),,vjust=-1)
+```
+```{r}
+ggplot(final, aes(x=reorder_site_id(site_id)))+geom_bar(aes(fill=as.numeric(final$area)))+geom_text(stat="count",aes(label=..count..),,vjust=-1)   
+#將各區面積加入長條圖中
+```
+
+```{r}
+ggplot(final, aes(x=reorder_site_id(site_id)))+geom_bar(aes(fill=as.numeric(final$population_density)))+geom_text(stat="count",aes(label=..count..),,vjust=-1)
+#將各區人口密度加入長條圖中
+```
+
+
+#小結論#
+透過上面的3張圖,若相關性較大者在柱狀圖的顏色上應為漸漸變淺。
+由目前結果看來，學校的數量應該是和當地人口數量最相關，    
+也就是說，人口越多的地方，學校數量越多
