@@ -7,4 +7,4 @@
 7/8 [Rmd轉htl](https://ellen0120.github.io/Ellen000/week%201-1/Homework.html)    
 7/11 [合併資料](https://ellen0120.github.io/Ellen000/week%201-2/%E5%BD%99%E6%95%B42.html)   
 #week2    
-7/15[資料視覺化](https://ellen0120.github.io/Ellen000/week 1-3/HW2.html)
+7/15[資料視覺化](https://ellen0120.github.io/Ellen000/week%201-3/HW2.html)
