@@ -8,4 +8,5 @@
 7/11 [合併資料](https://ellen0120.github.io/Ellen000/week%201-2/%E5%BD%99%E6%95%B42.html)   
 #week2    
 7/15[資料視覺化](https://ellen0120.github.io/Ellen000/week%201-3/HW2.html)  
-7/18[文字雲](https://ellen0120.github.io/Ellen000//wordcloud.html)
+7/18[文字雲](https://ellen0120.github.io/Ellen000//wordcloud.html)   
+    [Text Mining](https://ellen0120.github.io/Ellen000/Text_Mining.html)
