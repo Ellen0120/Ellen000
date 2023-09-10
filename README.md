@@ -10,4 +10,5 @@
 7/15[資料視覺化](https://ellen0120.github.io/Ellen000/week%201-3/HW2.html)  
 7/18[文字雲](https://ellen0120.github.io/Ellen000//wordcloud.html)   
     [Text Mining](https://ellen0120.github.io/Ellen000/Text_Mining.html)
+
 #[final project](https://hackmd.io/WYAU4-XKRV2QvRoREVlXTw)
